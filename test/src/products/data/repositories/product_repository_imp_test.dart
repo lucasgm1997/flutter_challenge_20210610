@@ -1,5 +1,5 @@
-import 'package:flutter_challenge_20210610/src/products/data/repositories/product_repository_imp.dart';
-import 'package:flutter_challenge_20210610/src/products/domain/entities/product_entity.dart';
+import 'package:flutterchallange/src/products/data/repositories/product_repository_imp.dart';
+import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

@@ -1,6 +1,6 @@
-import 'package:flutter_challenge_20210610/src/products/domain/entities/product_entity.dart';
-import 'package:flutter_challenge_20210610/src/products/domain/repositories/products_repository.dart';
-import 'package:flutter_challenge_20210610/src/products/domain/usecases/get_all_products_use_case.dart';
+import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
+import 'package:flutterchallange/src/products/domain/repositories/products_repository.dart';
+import 'package:flutterchallange/src/products/domain/usecases/get_all_products_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

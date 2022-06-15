@@ -1,7 +1,7 @@
-import 'package:flutter_challenge_20210610/src/products/data/adapters/json_to_product.dart';
-import 'package:flutter_challenge_20210610/src/products/data/datasources/product_firestore_datasource.dart';
-import 'package:flutter_challenge_20210610/src/products/domain/entities/product_entity.dart';
-import 'package:flutter_challenge_20210610/src/products/domain/repositories/products_repository.dart';
+import 'package:flutterchallange/src/products/data/adapters/json_to_product.dart';
+import 'package:flutterchallange/src/products/data/datasources/product_firestore_datasource.dart';
+import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
+import 'package:flutterchallange/src/products/domain/repositories/products_repository.dart';
 
 class ProductRepositoryImp implements IProductRepository {
   final IProductDataSource dataSource;

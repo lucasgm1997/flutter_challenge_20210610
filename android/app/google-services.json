@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "59225459934",
+    "project_id": "flutterchallange",
+    "storage_bucket": "flutterchallange.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59225459934:android:ae13640754b4180b19c64f",
+        "android_client_info": {
+          "package_name": "com.example.flutterchallange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59225459934-rac5lt04sal6dhe4lsad4pna890q0p7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtoRpN8IhGc9JrvTeo-Uec-rsj59c3I3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59225459934-rac5lt04sal6dhe4lsad4pna890q0p7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-import 'package:flutter_challenge_20210610/src/products/domain/entities/product_entity.dart';
+import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
 
 class JsonToProduct {
   static ProductEntity fromJson(Map<String, dynamic> json) {

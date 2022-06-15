@@ -1,4 +1,4 @@
-import 'package:flutter_challenge_20210610/src/products/data/datasources/product_firestore_datasource.dart';
+import 'package:flutterchallange/src/products/data/datasources/product_firestore_datasource.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductFirestoreDatasourceImp implements IProductDataSource {
