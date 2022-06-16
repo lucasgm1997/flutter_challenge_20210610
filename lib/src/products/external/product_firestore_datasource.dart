@@ -10,7 +10,7 @@ class ProductFirestoreDatasourceImp implements IProductDataSource {
   Stream<List<Map<String, dynamic>>> getAllProducts() {
     final collection = firestore.collection('products');
     final snapShotProduct =
-        collection.orderBy('priority', descending: true).snapshots();
+        collection.snapshots();
 
     return snapShotProduct
         .map((QuerySnapshot<Map<String, dynamic>> query) => query.docs)

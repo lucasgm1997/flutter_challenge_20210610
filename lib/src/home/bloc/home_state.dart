@@ -10,9 +10,9 @@ class EmptyHomeState implements HomeState {}
 class LoadingHomeState implements HomeState {}
 
 class LoadedHomeState implements HomeState {
-  final List<ProductEntity> queues;
+  final List<ProductEntity> products;
 
-  LoadedHomeState(this.queues);
+  LoadedHomeState(this.products);
 }
 
 class ExcpetionHomeState implements HomeState {

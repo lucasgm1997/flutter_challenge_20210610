@@ -13,7 +13,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc(this.getAllProductsUsecase) : super(HomeInitial()) {
     on<FetchProductsHomeEvent>(
-      (event, emit) => _fetchProducts,
+      _fetchProducts,
     );
   }
 
@@ -21,8 +21,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       FetchProductsHomeEvent event, Emitter<HomeState> emit) async {
     emit(LoadingHomeState());
 
+    await Future.delayed(const Duration(seconds: 1));
+
     await emit.onEach<List<ProductEntity>>(getAllProductsUsecase.call(),
-        onData: (queues) => emit(LoadedHomeState(queues)),
+        onData: (products) => emit(LoadedHomeState(products)),
         onError: (error, StackTrace stack) =>
             emit(ExcpetionHomeState(error.toString())));
   }

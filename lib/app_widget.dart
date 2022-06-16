@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterchallange/src/home/bloc/home_module.dart';
 import 'package:flutterchallange/src/home/home_page.dart';
+import 'package:flutterchallange/src/products/products_module.dart';
 import 'package:provider/provider.dart';
 
 class AppWidget extends StatelessWidget {
@@ -10,12 +11,14 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ...homeModule
+        ...productsModule,
+        ...homeModule,
       ],
       child: MaterialApp(
         routes: <String, WidgetBuilder>{
           '/': (_) => const HomePage(),
         },
+        
       ),
     );
   }
