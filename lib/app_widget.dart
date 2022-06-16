@@ -12,7 +12,7 @@ class AppWidget extends StatelessWidget {
     return MultiProvider(
       providers: [
         ...productsModule,
-        ...homeModule,
+        // ...homeModule,
       ],
       child: MaterialApp(
         routes: <String, WidgetBuilder>{
