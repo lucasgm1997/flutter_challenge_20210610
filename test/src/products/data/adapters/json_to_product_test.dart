@@ -7,10 +7,13 @@ void main() {
     final Map<String, dynamic> productMap = {
       'id': 'any_id',
       'title': 'any_title',
-      'photo': 'any_photo',
-      'rating': 0.0,
-      'type': 'type1',
+      'filename': 'any_photo',
+      'rating': 0,
+      'type': 'dairy',
       'price': 0.0,
+      'description': 'any_description',
+      'height': 400,
+      'width': 200,
     };
 
     final ProductEntity productEntity = JsonToProduct.fromJson(productMap);
@@ -18,29 +21,41 @@ void main() {
     expect(productEntity, isA<ProductEntity>());
     expect(productEntity.id, 'any_id');
     expect(productEntity.title, 'any_title');
-    expect(productEntity.photo, 'any_photo');
-    expect(productEntity.rating, 0.0);
-    expect(productEntity.type, EProductType.type1);
+    expect(productEntity.filename, 'any_photo');
+    expect(productEntity.rating, 0);
+    expect(productEntity.type, EProductType.dairy);
     expect(productEntity.price, 0.0);
+     expect(productEntity.height, 400);
+    expect(productEntity.width, 200);
+    expect(productEntity.description, 'any_description');
+
   });
 
   test('Should convert a object of type product to map', () {
     final productEntity = ProductEntity(
       id: 'any_id',
       title: 'any_title',
-      photo: 'any_photo',
+      filename: 'any_photo',
       price: 0.0,
-      rating: 0.0,
-      type: EProductType.type2,
+      rating: 0,
+      type: EProductType.bakery,
+      description: 'any_description',
+      height: 400,
+      width: 200,
     );
 
     final Map<String, dynamic> productMap = JsonToProduct.toJson(productEntity);
 
     expect(productMap['id'], 'any_id');
     expect(productMap['title'], 'any_title');
-    expect(productMap['photo'], 'any_photo');
-    expect(productMap['rating'], 0.0);
-    expect(productMap['type'], EProductType.type2);
+    expect(productMap['filename'], 'any_photo');
+    expect(productMap['rating'], 0);
+    expect(productMap['type'], EProductType.bakery);
     expect(productMap['price'], 0.0);
+    expect(productMap['height'], 400);
+    expect(productMap['width'], 200);
+    expect(productMap['description'], 'any_description');
+
+    
   });
 }
