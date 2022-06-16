@@ -15,6 +15,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<FetchProductsHomeEvent>(
       _fetchProducts,
     );
+
+    add(FetchProductsHomeEvent());
   }
 
   Future<void> _fetchProducts(
