@@ -1,14 +1,21 @@
 class ProductEntity {
   final String id;
-  final String photo;
+  final String filename;
   final String title;
+  final String description;
+  final int height;
+  final int width;
   final EProductType type;
-  final double rating;
+  final int rating;
   final double price;
 
   ProductEntity(
-      {required this.id,
-      required this.photo,
+      {
+      required this.filename,
+      required this.description,
+      required this.height,
+      required this.width,
+      required this.id,
       required this.title,
       required this.type,
       required this.rating,
@@ -16,8 +23,10 @@ class ProductEntity {
 }
 
 enum EProductType {
-  type1,
-  type2,
-  type3,
+  dairy,
+  fruit,
+  vegetable,
+  bakery,
+  vegan,
+  meat,
 }
-

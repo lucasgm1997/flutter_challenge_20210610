@@ -4,22 +4,29 @@ class JsonToProduct {
   static ProductEntity fromJson(Map<String, dynamic> json) {
     return ProductEntity(
       id: json['id'],
-      photo: json['photo'],
+      filename: json['filename'],
       price: json['price'],
       rating: json['rating'],
       title: json['title'],
-      type: EProductType.values.firstWhere((element) => element.name == json['type']),
+      description: json['description'],
+      height: json['height'],
+      width: json['width'],
+      type: EProductType.values
+          .firstWhere((element) => element.name == json['type']),
     );
   }
 
   static Map<String, dynamic> toJson(ProductEntity entity) {
     return {
       'id': entity.id,
-      'photo': entity.photo,
+      'filename': entity.filename,
       'price': entity.price,
       'rating': entity.rating,
       'title': entity.title,
-      'type': entity.type
+      'type': entity.type,
+      'description': entity.description,
+      'height': entity.height,
+      'width': entity.width,
     };
   }
 }
