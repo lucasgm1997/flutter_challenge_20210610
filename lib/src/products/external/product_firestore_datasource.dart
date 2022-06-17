@@ -10,25 +10,33 @@ class ProductFirestoreDatasourceImp implements IProductDataSource {
   @override
   Stream<List<Map<String, dynamic>>> getAllProducts() {
     final collection = firestore.collection('products');
-    final snapShotProduct =
-        collection.snapshots();
+    final snapShotProduct = collection.snapshots();
 
     return snapShotProduct
         .map((QuerySnapshot<Map<String, dynamic>> query) => query.docs)
         .map((list) => _convert(list));
   }
 
-  List<Map<String, dynamic>> _convert( List<QueryDocumentSnapshot<Map<String, dynamic>>> listDocs) {
+  List<Map<String, dynamic>> _convert(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> listDocs) {
     return listDocs.map((document) {
       return {'id': document.id, ...document.data()};
     }).toList();
   }
-  
-  @override
-  Future<void> removeProduct(ProductEntity product) async {
 
-    await firestore.collection('products').doc(product.title).delete();
+  @override
+  Future<void> removeProduct(String id) async {
+    await firestore.collection('products').doc(id).delete();
   }
 
+  @override
+  Future<void> updateProduct(Map<String, dynamic> product) async {
+    final collectionReference = firestore.collection('products');
 
+    final doc = collectionReference.doc(product['id']);
+
+    product.remove('id');
+    
+    await doc.set(product);
+  }
 }
