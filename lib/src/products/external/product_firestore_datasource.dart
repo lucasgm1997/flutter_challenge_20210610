@@ -26,7 +26,8 @@ class ProductFirestoreDatasourceImp implements IProductDataSource {
   
   @override
   Future<void> removeProduct(ProductEntity product) async {
-    await firestore.collection('products').doc(product.id).delete();
+
+    await firestore.collection('products').doc(product.title).delete();
   }
 
 
