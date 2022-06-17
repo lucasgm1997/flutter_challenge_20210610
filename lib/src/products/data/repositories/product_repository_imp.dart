@@ -18,4 +18,12 @@ class ProductRepositoryImp implements IProductRepository {
   List<ProductEntity> _convert(List<Map<String, dynamic>> list) {
     return list.map((item) => JsonToProduct.fromJson(item)).toList();
   }
+  
+  @override
+  Future<void> removeProduct(ProductEntity product) async  {
+    
+    dataSource.removeProduct(product);
+  }
+
+
 }

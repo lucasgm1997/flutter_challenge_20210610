@@ -1,5 +1,6 @@
 import 'package:flutterchallange/src/products/data/datasources/product_firestore_datasource.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
 
 class ProductFirestoreDatasourceImp implements IProductDataSource {
   FirebaseFirestore firestore;
@@ -21,6 +22,11 @@ class ProductFirestoreDatasourceImp implements IProductDataSource {
     return listDocs.map((document) {
       return {'id': document.id, ...document.data()};
     }).toList();
+  }
+  
+  @override
+  Future<void> removeProduct(ProductEntity product) async {
+    await firestore.collection('products').doc(product.id).delete();
   }
 
 

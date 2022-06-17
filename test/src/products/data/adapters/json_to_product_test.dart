@@ -55,7 +55,5 @@ void main() {
     expect(productMap['height'], 400);
     expect(productMap['width'], 200);
     expect(productMap['description'], 'any_description');
-
-    
   });
 }
