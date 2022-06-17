@@ -23,7 +23,7 @@ class JsonToProduct {
       'price': entity.price,
       'rating': entity.rating,
       'title': entity.title,
-      'type': entity.type,
+      'type': entity.type.name,
       'description': entity.description,
       'height': entity.height,
       'width': entity.width,
