@@ -16,3 +16,8 @@ class RemoveProductHomeEvent implements HomeEvent {
   final ProductEntity productEntity;
   RemoveProductHomeEvent(this.productEntity);
 }
+
+class UpdateProductHomeEvent implements HomeEvent {
+  final ProductEntity productEntity;
+  UpdateProductHomeEvent(this.productEntity);
+}
