@@ -10,8 +10,7 @@ class ProductEntity {
   final double price;
 
   ProductEntity(
-      {
-      required this.filename,
+      {required this.filename,
       required this.description,
       required this.height,
       required this.width,
