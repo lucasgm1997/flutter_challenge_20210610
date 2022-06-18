@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -5,11 +6,11 @@ import 'package:flutterchallange/src/home/bloc/home_bloc.dart';
 import 'package:flutterchallange/src/home/models/product_model.dart';
 import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
 import 'package:flutterchallange/src/products/domain/usecases/get_all_products_use_case.dart';
+import 'package:flutterchallange/src/products/domain/usecases/get_url_use_case.dart';
 import 'package:flutterchallange/src/products/domain/usecases/remove_product_use_case.dart';
 import 'package:flutterchallange/src/products/domain/usecases/update_product_use_case.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:intl/intl.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,7 +21,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeBloc bloc;
-  String? _value = "dairy";
 
   @override
   void initState() {
@@ -29,7 +29,8 @@ class _HomePageState extends State<HomePage> {
     bloc = HomeBloc(
         context.read<IGetAllProductsUseCase>(),
         context.read<IRemoveProductUsecase>(),
-        context.read<IUpdateProductUsecase>());
+        context.read<IUpdateProductUsecase>(),
+        context.read<IGetUrlUseCase>());
   }
 
   @override
@@ -56,10 +57,9 @@ class _HomePageState extends State<HomePage> {
 
   Widget getBody(BuildContext context, Object? state) {
     if (state is LoadingHomeState) {
-      return  SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-
+      return SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           child: const Center(child: CircularProgressIndicator()));
     } else if (state is LoadedHomeState) {
       return localListView(context, state);
@@ -103,12 +103,25 @@ class _HomePageState extends State<HomePage> {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, left: 10.0),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          width: MediaQuery.of(context).size.width / 4,
-          height: MediaQuery.of(context).size.width / 4,
-          color: Colors.blue,
-          child: Image.network(product.filename, fit: BoxFit.cover),
-        ),
+        FutureBuilder<String>(
+            future: getURL(product.filename),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                  width: MediaQuery.of(context).size.width / 4,
+                  height: MediaQuery.of(context).size.width / 4,
+                  color: Colors.blue,
+                  child: Image.network(snapshot.data!, fit: BoxFit.cover),
+                );
+              }
+
+              if (snapshot.hasError) {
+                return const Text('Erro ao pegar imagem');
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }),
         Column(
           children: [
             Padding(
@@ -119,9 +132,6 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(left: 10),
               child: Text('Type: ${product.type.name}'),
             ),
-
-            
-           
             RatingBarIndicator(
               itemSize: 15.0,
               itemCount: 5,
@@ -143,6 +153,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Future<String> getURL(String filename) async {
+    final storageRef = context.read<FirebaseStorage>().ref();
+
+    final reference = storageRef.child('images/$filename');
+
+    final url = await reference.getDownloadURL();
+
+    return url;
+  }
+
   Widget popUpMenu(ProductEntity product) {
     return Padding(
       padding: const EdgeInsets.only(right: 20.0, top: 10.0),
@@ -155,7 +175,7 @@ class _HomePageState extends State<HomePage> {
               child: ListTile(
                 title: const Text('Edit'),
                 onTap: () {
-                  _addNewQueueDialog(product);
+                  _addNewProductDialog(product);
                 },
               ),
             ),
@@ -174,7 +194,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _addNewQueueDialog(ProductEntity product) {
+  void _addNewProductDialog(ProductEntity product) {
     showDialog(
         context: context,
         builder: (context) {

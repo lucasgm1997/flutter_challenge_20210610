@@ -28,4 +28,11 @@ class ProductRepositoryImp implements IProductRepository {
   Future<void> updateProduct(ProductEntity product) async {
     dataSource.updateProduct(JsonToProduct.toJson(product));
   }
+  
+  @override
+  Future<String> getUrl(String filename) async {
+     return await dataSource.getURL(filename);
+  }
+
+  
 }

@@ -5,6 +5,7 @@ import 'package:flutterchallange/src/products/data/datasources/product_firestore
 import 'package:flutterchallange/src/products/data/repositories/product_repository_imp.dart';
 import 'package:flutterchallange/src/products/domain/repositories/products_repository.dart';
 import 'package:flutterchallange/src/products/domain/usecases/get_all_products_use_case.dart';
+import 'package:flutterchallange/src/products/domain/usecases/get_url_use_case.dart';
 import 'package:flutterchallange/src/products/domain/usecases/remove_product_use_case.dart';
 import 'package:flutterchallange/src/products/domain/usecases/update_product_use_case.dart';
 import 'package:flutterchallange/src/products/external/product_firestore_datasource.dart';
@@ -20,6 +21,5 @@ final productsModule = [
   Provider<IGetAllProductsUseCase>(create: (context) => GetAllProductsUseCaseImp(context.read<IProductRepository>()),),
   Provider<IRemoveProductUsecase>(create: (context) => RemoveProductUsecaseImp(context.read<IProductRepository>()),),
   Provider<IUpdateProductUsecase>(create: (context) => UpdateProductUsecaseImp(context.read<IProductRepository>()),),
-
-  
+  Provider<IGetUrlUseCase>(create: (context) => GetUrlUseCaseImp(context.read<IProductRepository>()),),
 ];

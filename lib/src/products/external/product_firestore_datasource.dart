@@ -1,6 +1,6 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutterchallange/src/products/data/datasources/product_firestore_datasource.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
 
 class ProductFirestoreDatasourceImp implements IProductDataSource {
   FirebaseFirestore firestore;
@@ -36,7 +36,15 @@ class ProductFirestoreDatasourceImp implements IProductDataSource {
     final doc = collectionReference.doc(product['id']);
 
     product.remove('id');
-    
+
     await doc.set(product);
+  }
+
+  @override
+  Future<String> getURL(String filename) async {
+    final storageRef = FirebaseStorage.instance.ref();
+    final result = storageRef.child('images/$filename');
+    final url = await result.getDownloadURL();
+    return url;
   }
 }

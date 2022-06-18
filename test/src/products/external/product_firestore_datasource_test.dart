@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutterchallange/src/products/external/product_firestore_datasource.dart';
 import 'package:flutter_test/flutter_test.dart';
