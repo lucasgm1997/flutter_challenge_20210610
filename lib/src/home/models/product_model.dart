@@ -26,7 +26,7 @@ class ProductModel extends ProductEntity {
             width: width);
 
   factory ProductModel.empty() => ProductModel(
-        dateTime: DateTime.now().toString(),
+        dateTime: DateTime.now(),
         title: '',
         description: '',
         filename: '',

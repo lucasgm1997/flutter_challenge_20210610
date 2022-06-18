@@ -4,7 +4,7 @@ import 'package:flutterchallange/src/products/domain/entities/product_entity.dar
 class JsonToProduct {
   static ProductEntity fromJson(Map<String, dynamic> json) {
     return ProductEntity(
-      dateTime:  (json['dateTime'] as Timestamp).toDate(),
+      dateTime: (json['dateTime'] as Timestamp).toDate(),
       id: json['id'],
       filename: json['filename'],
       price: json['price'],
@@ -29,6 +29,7 @@ class JsonToProduct {
       'description': entity.description,
       'height': entity.height,
       'width': entity.width,
+      'dateTime': Timestamp.fromDate(entity.dateTime),
     };
   }
 }

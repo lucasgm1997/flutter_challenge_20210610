@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterchallange/src/home/models/product_model.dart';
 import 'package:flutterchallange/src/products/data/repositories/product_repository_imp.dart';
 import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
@@ -15,6 +16,7 @@ void main() {
         .thenAnswer((invocation) => Stream.value([
               {
                 'id': 'any_id',
+                'dateTime': Timestamp.fromDate(DateTime.now()),
                 'title': 'any_title',
                 'filename': 'any_photo',
                 'rating': 0,
@@ -56,5 +58,4 @@ void main() {
 
     expect(repository.updateProduct(product), completes);
   });
-
 }

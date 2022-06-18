@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterchallange/src/products/data/adapters/json_to_product.dart';
 import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,6 +7,7 @@ void main() {
   test('Should return a object of type product.', () {
     final Map<String, dynamic> productMap = {
       'id': 'any_id',
+      'dateTime': Timestamp.fromDate(DateTime.now()),
       'title': 'any_title',
       'filename': 'any_photo',
       'rating': 0,
