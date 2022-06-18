@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
 
 class JsonToProduct {
   static ProductEntity fromJson(Map<String, dynamic> json) {
     return ProductEntity(
+      dateTime:  (json['dateTime'] as Timestamp).toDate(),
       id: json['id'],
       filename: json['filename'],
       price: json['price'],

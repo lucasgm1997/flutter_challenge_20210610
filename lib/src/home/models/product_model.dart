@@ -2,7 +2,9 @@ import 'package:flutterchallange/src/products/domain/entities/product_entity.dar
 
 class ProductModel extends ProductEntity {
   ProductModel(
-      {required filename,
+      {
+      required dateTime,
+      required filename,
       required description,
       required height,
       required width,
@@ -13,6 +15,7 @@ class ProductModel extends ProductEntity {
       required price})
       : super(
             id: id,
+            dateTime: dateTime,
             description: description,
             filename: filename,
             title: title,
@@ -23,6 +26,7 @@ class ProductModel extends ProductEntity {
             width: width);
 
   factory ProductModel.empty() => ProductModel(
+        dateTime: DateTime.now().toString(),
         title: '',
         description: '',
         filename: '',
@@ -35,7 +39,8 @@ class ProductModel extends ProductEntity {
       );
 
   ProductModel copyWith(
-    { String? filename,
+    { DateTime ? dateTime,
+      String? filename,
       String? description,
       int? height,
       int? width,
@@ -46,6 +51,7 @@ class ProductModel extends ProductEntity {
       double? price}) {
         
     return ProductModel(
+      dateTime: dateTime?? this.dateTime,
       description: description?? this.description,
       filename: filename?? this.filename,
       height: height?? this.height,

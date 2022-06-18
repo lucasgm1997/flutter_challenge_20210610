@@ -1,5 +1,6 @@
 class ProductEntity {
   final String id;
+  final DateTime dateTime;
   final String filename;
   final String title;
   final String description;
@@ -10,7 +11,8 @@ class ProductEntity {
   final double price;
 
   ProductEntity(
-      {required this.filename,
+      {required this.dateTime,
+      required this.filename,
       required this.description,
       required this.height,
       required this.width,

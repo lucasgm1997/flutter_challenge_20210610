@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutterchallange/src/home/bloc/home_bloc.dart';
 import 'package:flutterchallange/src/home/models/product_model.dart';
 import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
@@ -7,6 +8,8 @@ import 'package:flutterchallange/src/products/domain/usecases/get_all_products_u
 import 'package:flutterchallange/src/products/domain/usecases/remove_product_use_case.dart';
 import 'package:flutterchallange/src/products/domain/usecases/update_product_use_case.dart';
 import 'package:group_radio_button/group_radio_button.dart';
+import 'package:intl/intl.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -53,7 +56,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget getBody(BuildContext context, Object? state) {
     if (state is LoadingHomeState) {
-      return const CircularProgressIndicator();
+      return  SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+
+          child: const Center(child: CircularProgressIndicator()));
     } else if (state is LoadedHomeState) {
       return localListView(context, state);
     } else if (state is ExcpetionHomeState) {
@@ -72,19 +79,19 @@ class _HomePageState extends State<HomePage> {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 6,
             child: Card(
-              color: Colors.grey,
+              color: Colors.white,
               elevation: 2.0,
               child: Stack(
                 children: [
                   infosProduct(state.products[index]),
                   popUpMenu(state.products[index]),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(right: 20.0, bottom: 20.0),
-                  //   child: Align(
-                  //     alignment: Alignment.bottomRight,
-                  //     child: Text('${state.products[index].price}'),
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20.0, bottom: 20.0),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text('R\$ ${state.products[index].price}'),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -110,11 +117,25 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text(product.type.name),
+              child: Text('Type: ${product.type.name}'),
+            ),
+
+            
+           
+            RatingBarIndicator(
+              itemSize: 15.0,
+              itemCount: 5,
+              direction: Axis.horizontal,
+              rating: product.rating.toDouble(),
+              itemPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+              itemBuilder: (context, _) => const Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text('${product.price}'),
+              child: Text(DateFormat('MM/dd/yyyy').format(product.dateTime)),
             ),
           ],
         )
@@ -190,6 +211,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       bloc.add(UpdateProductHomeEvent(toUpdateProduct));
                       Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     },
                     child: const Text('Update')),
               ],
@@ -210,7 +232,6 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 10,
                     ),
-                  
                     TextFormField(
                       decoration: const InputDecoration(
                         label: Text('Price'),

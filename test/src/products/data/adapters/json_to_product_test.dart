@@ -35,6 +35,7 @@ void main() {
     EProductType actualType = EProductType.bakery;
 
     final productEntity = ProductEntity(
+      dateTime: DateTime.now(),
       id: 'any_id',
       title: 'any_title',
       filename: 'any_photo',

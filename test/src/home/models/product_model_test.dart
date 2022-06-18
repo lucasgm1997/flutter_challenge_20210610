@@ -7,6 +7,7 @@ void main() {
       'Should return a new product model with copying only a attribut at a time',
       () {
     var productModel = ProductModel(
+      dateTime: DateTime.now(),
       id: 'any_id',
       title: 'any_title',
       filename: 'any_photo',
