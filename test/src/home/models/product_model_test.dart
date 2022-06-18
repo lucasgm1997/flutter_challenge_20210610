@@ -4,7 +4,7 @@ import 'package:flutterchallange/src/products/domain/entities/product_entity.dar
 
 void main() {
   test(
-      'Should return a new product model with copying only a attribut at a time',
+      'test copyWith',
       () {
     var productModel = ProductModel(
       dateTime: DateTime.now(),
@@ -39,4 +39,35 @@ void main() {
     expect(productModel.height, 400);
     expect(productModel.width, 200);
   });
+
+  test(
+      'test cloneFrom',
+      () {
+    var productEntity = ProductEntity(
+      dateTime: DateTime.now(),
+      id: 'any_id',
+      title: 'any_title',
+      filename: 'any_photo',
+      description: 'any_description',
+      price: 0.0,
+      rating: 0,
+      type: EProductType.bakery,
+      height: 400,
+      width: 200,
+    );
+
+    final productModel = ProductModel.cloneFrom(productEntity);
+
+    expect(productModel.id, 'any_id');
+    expect(productModel.title, 'any_title');
+    expect(productModel.filename, 'any_photo');
+    expect(productModel.description, 'any_description');
+    expect(productModel.price, 0.0);
+    expect(productModel.rating, 0);
+    expect(productModel.type, EProductType.bakery);
+    expect(productModel.height, 400);
+    expect(productModel.width, 200);
+  });
+
+
 }
