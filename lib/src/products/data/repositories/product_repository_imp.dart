@@ -29,10 +29,4 @@ class ProductRepositoryImp implements IProductRepository {
     dataSource.updateProduct(JsonToProduct.toJson(product));
   }
   
-  @override
-  Future<String> getUrl(String filename) async {
-     return await dataSource.getURL(filename);
-  }
-
-  
 }

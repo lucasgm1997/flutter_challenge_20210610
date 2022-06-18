@@ -6,6 +6,4 @@ abstract class IProductRepository {
   Future<void> removeProduct(ProductEntity product);
 
   Future<void> updateProduct(ProductEntity product);
-
-  Future<String> getUrl(String filename);
 }

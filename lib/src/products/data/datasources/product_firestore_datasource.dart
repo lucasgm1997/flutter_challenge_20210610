@@ -4,6 +4,4 @@ abstract class IProductDataSource {
   Future<void> removeProduct(String id);
 
   Future<void> updateProduct(Map<String, dynamic> product);
-
-  Future<String> getURL(String filename);
 }
