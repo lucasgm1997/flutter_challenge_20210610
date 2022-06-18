@@ -52,7 +52,6 @@ class PopUpButtonWidget extends StatelessWidget {
     showDialog(
         context: context,
         builder: (context) {
-
           var toUpdateProduct = ProductModel.cloneFrom(product);
 
           return StatefulBuilder(builder: (context, localSetState) {
@@ -105,14 +104,18 @@ class PopUpButtonWidget extends StatelessWidget {
                       },
                     ),
                     RadioGroup<String>.builder(
-                      groupValue: product.type.name,
+                      groupValue: toUpdateProduct.type.name,
                       onChanged: (value) => localSetState(() {
                         toUpdateProduct = toUpdateProduct.copyWith(
                             type: EProductType.values.firstWhere(
                                 (element) => element.name == value));
                       }),
-                      items: EProductType.values.map((element) => element.name).toList(),
-                      itemBuilder: (item) => RadioButtonBuilder(item),
+                      items: EProductType.values
+                          .map((element) => element.name)
+                          .toList(),
+                      itemBuilder: (item) => RadioButtonBuilder(
+                        item,
+                      ),
                     ),
                   ],
                 ),
