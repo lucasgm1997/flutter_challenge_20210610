@@ -1,71 +1,142 @@
+import 'dart:async';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class InfosProductWidget extends StatelessWidget {
+class InfosProductWidget extends StatefulWidget {
   final ProductEntity product;
   const InfosProductWidget(this.product, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return infosProduct(product, context);
+  State<InfosProductWidget> createState() => _InfosProductWidgetState();
+}
+
+class _InfosProductWidgetState extends State<InfosProductWidget> {
+  late Future<String> url;
+
+  @override
+  void initState() {
+    super.initState();
+    url = getURL(widget.product.filename, context);
   }
 
-  Widget infosProduct(ProductEntity product, BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
+    return infosProduct();
+  }
+
+  Widget infosProduct() {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, left: 10.0),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         FutureBuilder<String>(
-            future: getURL(product.filename, context),
+            future: url.timeout(const Duration(seconds: 3)),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Container(
-                  width: MediaQuery.of(context).size.width / 4,
-                  height: MediaQuery.of(context).size.width / 4,
-                  color: Colors.blue,
-                  child: Image.network(snapshot.data!, fit: BoxFit.cover),
-                );
+                return snapshotHasData(snapshot);
               }
 
               if (snapshot.hasError) {
-                return const Text('Erro ao pegar imagem');
+                return snapshotHasError();
               }
-              return const Center(
-                child: CircularProgressIndicator(),
+
+              return SizedBox(
+                width: MediaQuery.of(context).size.width / 4,
+                height: MediaQuery.of(context).size.width / 4,
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             }),
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(product.title),
+        Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.ideographic,
+              children: [
+                title(),
+                type(),
+                productCreationDate(),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text('Type: ${product.type.name}'),
-            ),
-            RatingBarIndicator(
-              itemSize: 15.0,
-              itemCount: 5,
-              direction: Axis.horizontal,
-              rating: product.rating.toDouble(),
-              itemPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-              itemBuilder: (context, _) => const Icon(
-                Icons.star,
-                color: Colors.amber,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(DateFormat('MM/dd/yyyy').format(product.dateTime)),
-            ),
-          ],
+          ),
         )
       ]),
     );
+  }
+
+  Widget snapshotHasData(AsyncSnapshot<String> snapshot) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Theme.of(context).colorScheme.onSecondary,
+      ),
+      width: MediaQuery.of(context).size.width / 4,
+      height: MediaQuery.of(context).size.width / 4,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: Image.network(
+          snapshot.data!,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget snapshotHasError() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      width: MediaQuery.of(context).size.width / 4,
+      height: MediaQuery.of(context).size.width / 4,
+      child: Center(
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: const Text(
+              'Erro ao \n obter \n imagem!',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white),
+            )),
+      ),
+    );
+  }
+
+  Widget title() {
+    return Text(
+      widget.product.title,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(
+        fontSize: 16.0,
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget type() {
+    return Text(
+      'Type: ${widget.product.type.name}',
+      style: const TextStyle(
+        fontSize: 14.0,
+        fontFamily: 'Roboto',
+      ),
+    );
+  }
+
+  Widget productCreationDate() {
+    return Text(
+        style: const TextStyle(
+          fontSize: 14.0,
+          fontFamily: 'Roboto',
+        ),
+        DateFormat('MM/dd/yyyy').format(widget.product.dateTime));
   }
 
   Future<String> getURL(String filename, BuildContext context) async {

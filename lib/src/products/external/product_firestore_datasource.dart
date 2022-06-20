@@ -38,5 +38,4 @@ class ProductFirestoreDatasourceImp implements IProductDataSource {
 
     await doc.set(product);
   }
-
 }

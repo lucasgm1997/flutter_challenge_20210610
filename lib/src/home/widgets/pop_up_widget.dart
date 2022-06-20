@@ -17,33 +17,30 @@ class PopUpButtonWidget extends StatelessWidget {
   }
 
   Widget popUpMenu(ProductEntity product) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20.0, top: 10.0),
-      child: Align(
-        alignment: Alignment.topRight,
-        child: PopupMenuButton(
-          icon: const Icon(Icons.more_horiz),
-          itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-            PopupMenuItem(
-              child: ListTile(
-                title: const Text('Edit'),
-                onTap: () {
-                  _addNewProductDialog(product, context);
-                },
-              ),
+    return Align(
+      alignment: Alignment.topRight,
+      child: PopupMenuButton(
+        icon: const Icon(Icons.more_horiz),
+        itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+          PopupMenuItem(
+            child: ListTile(
+              title: const Text('Edit'),
+              onTap: () {
+                _addNewProductDialog(product, context);
+              },
             ),
-            PopupMenuItem(
-              child: ListTile(
-                title: const Text('Remove'),
-                onTap: () {
-                  onRemove(product);
-                  Future.delayed(const Duration(milliseconds: 500));
-                  Navigator.of(context).pop();
-                },
-              ),
+          ),
+          PopupMenuItem(
+            child: ListTile(
+              title: const Text('Remove'),
+              onTap: () {
+                onRemove(product);
+                Future.delayed(const Duration(milliseconds: 500));
+                Navigator.of(context).pop();
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
