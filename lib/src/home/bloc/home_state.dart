@@ -15,6 +15,12 @@ class LoadedHomeState implements HomeState {
   LoadedHomeState(this.products);
 }
 
+class NextLoadedHomeState implements HomeState {
+  final List<ProductEntity> products;
+
+  NextLoadedHomeState(this.products);
+}
+
 class ExcpetionHomeState implements HomeState {
   final String message;
 

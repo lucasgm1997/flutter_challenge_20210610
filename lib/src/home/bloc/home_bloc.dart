@@ -2,7 +2,8 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
-import 'package:flutterchallange/src/products/domain/usecases/get_all_products_use_case.dart';
+import 'package:flutterchallange/src/products/domain/usecases/get_first_list_products_use_case.dart';
+import 'package:flutterchallange/src/products/domain/usecases/next_product_usecase.dart';
 import 'package:flutterchallange/src/products/domain/usecases/remove_product_use_case.dart';
 import 'package:flutterchallange/src/products/domain/usecases/update_product_use_case.dart';
 import 'package:meta/meta.dart';
@@ -11,14 +12,15 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final IGetAllProductsUseCase getAllProductsUsecase;
+  final IGetFirstListProductUseCase getAllProductsUsecase;
   final IRemoveProductUsecase removeProductUsecase;
   final IUpdateProductUsecase updateProductUsecase;
+  final INextProductUsecase nextProductUsecase;
 
   HomeBloc(this.getAllProductsUsecase, this.removeProductUsecase,
-      this.updateProductUsecase)
+      this.updateProductUsecase, this.nextProductUsecase)
       : super(HomeInitial()) {
-    on<FetchProductsHomeEvent>(
+    on<GetFirstListProductsHomeEvent>(
       _fetchProducts,
     );
 
@@ -30,7 +32,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _updateProduct,
     );
 
-    add(FetchProductsHomeEvent());
+    on<NextProductsHomeEvent>(
+      _nextProduct,
+    );
+
+    add(GetFirstListProductsHomeEvent());
+  }
+
+  Future<void> _nextProduct(
+      NextProductsHomeEvent event, Emitter<HomeState> emit) async {
+
+    await emit.onEach<List<ProductEntity>>(nextProductUsecase.call(),
+        onData: (products) async {
+          emit(LoadedHomeState(products));
+        },
+        onError: (error, StackTrace stack) =>
+            emit(ExcpetionHomeState(error.toString())));
   }
 
   Future<void> _updateProduct(
@@ -44,15 +61,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _fetchProducts(
-      FetchProductsHomeEvent event, Emitter<HomeState> emit) async {
+      GetFirstListProductsHomeEvent event, Emitter<HomeState> emit) async {
     emit(LoadingHomeState());
 
     await Future.delayed(const Duration(seconds: 1));
 
     await emit.onEach<List<ProductEntity>>(getAllProductsUsecase.call(),
         onData: (products) async {
-
-       
           emit(LoadedHomeState(products));
         },
         onError: (error, StackTrace stack) =>

@@ -9,8 +9,8 @@ class ProductRepositoryImp implements IProductRepository {
   ProductRepositoryImp(this.dataSource);
 
   @override
-  Stream<List<ProductEntity>> getAllProducts() {
-    final stream = dataSource.getAllProducts();
+  Stream<List<ProductEntity>> getFirstListProduct() {
+    final stream = dataSource.getFirstList();
 
     return stream.map((list) => _convert(list));
   }
@@ -27,6 +27,13 @@ class ProductRepositoryImp implements IProductRepository {
   @override
   Future<void> updateProduct(ProductEntity product) async {
     dataSource.updateProduct(JsonToProduct.toJson(product));
+  }
+  
+  @override
+  Stream<List<ProductEntity>> nextListProducts()  {
+    final stream = dataSource.getNextProducts();
+
+    return stream.map((list) => _convert(list));
   }
   
 }

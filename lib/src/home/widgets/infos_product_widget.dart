@@ -15,12 +15,9 @@ class InfosProductWidget extends StatefulWidget {
 }
 
 class _InfosProductWidgetState extends State<InfosProductWidget> {
-  late Future<String> url;
-
   @override
   void initState() {
     super.initState();
-    url = getURL(widget.product.filename, context);
   }
 
   @override
@@ -33,7 +30,8 @@ class _InfosProductWidgetState extends State<InfosProductWidget> {
       padding: const EdgeInsets.only(top: 10.0, left: 10.0),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         FutureBuilder<String>(
-            future: url.timeout(const Duration(seconds: 3)),
+            future: getURL(widget.product.filename, context)
+                .timeout(const Duration(seconds: 2)),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return snapshotHasData(snapshot);
@@ -88,6 +86,7 @@ class _InfosProductWidgetState extends State<InfosProductWidget> {
     );
   }
 
+ 
   Widget snapshotHasError() {
     return Container(
       decoration: BoxDecoration(
@@ -100,7 +99,7 @@ class _InfosProductWidgetState extends State<InfosProductWidget> {
         child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: const Text(
-              'Erro ao \n obter \n imagem!',
+              'Error \n getting \n image!',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white),
             )),

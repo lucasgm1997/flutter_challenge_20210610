@@ -12,7 +12,7 @@ void main() {
       () {
     final datasource = ProductDataSourceMock();
 
-    when(() => datasource.getAllProducts())
+    when(() => datasource.getFirstList())
         .thenAnswer((invocation) => Stream.value([
               {
                 'id': 'any_id',
@@ -30,7 +30,7 @@ void main() {
 
     final repository = ProductRepositoryImp(datasource);
 
-    expect(repository.getAllProducts(), emits(isA<List<ProductEntity>>()));
+    expect(repository.getFirstListProduct(), emits(isA<List<ProductEntity>>()));
   });
 
   test('Should remove a product', () {

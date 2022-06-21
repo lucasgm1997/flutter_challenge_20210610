@@ -1,6 +1,6 @@
 import 'package:flutterchallange/src/products/domain/entities/product_entity.dart';
 import 'package:flutterchallange/src/products/domain/repositories/products_repository.dart';
-import 'package:flutterchallange/src/products/domain/usecases/get_all_products_use_case.dart';
+import 'package:flutterchallange/src/products/domain/usecases/get_first_list_products_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -13,7 +13,7 @@ void main() {
 
     final productEntity = ProductEntityMock();
 
-    when(() => productRepositoryMock.getAllProducts())
+    when(() => productRepositoryMock.getFirstListProduct())
         .thenAnswer((invocation) => Stream.value([productEntity]));
 
     final uecsase = GetAllProductsUseCaseImp(productRepositoryMock);

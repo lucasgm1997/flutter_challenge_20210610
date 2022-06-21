@@ -8,7 +8,7 @@ void main() {
     final firestore = FakeFirebaseFirestore();
     final dataSource = ProductFirestoreDatasourceImp(firestore);
 
-    await firestore.collection('product').add({
+    await firestore.collection('products').add({
       'id': 'any_id',
       'title': 'any_title',
       'photo': 'any_photo',
@@ -17,7 +17,7 @@ void main() {
       'price': 0.0,
     });
 
-    final result = dataSource.getAllProducts();
+    final result = dataSource.getFirstList();
 
     expect(result, emits(isA<List<Map<String, dynamic>>>()));
   });
@@ -81,4 +81,5 @@ void main() {
     expect(doc.data()?['title'], 'new_title');
     expect(doc.data()?['width'], 2002);
   });
+
 }
